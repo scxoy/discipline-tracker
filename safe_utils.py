@@ -5,10 +5,12 @@ class Safety:
         self.timeout_seconds = timeout_seconds
         self.max_steps = max_steps
         self.steps = 0
-        def step(self):
-            self.steps += 1
-            if self.steps > self.max_steps:
-                raise RuntimeError("SAFETY STOP/ trop de tours")
-            if time.time() - self.start > self.timeout_seconds:
-                raise TimeoutError("SAFETY STOP: timeout")
+
+    def step(self):
+        self.steps += 1
+        if self.steps > self.max_steps:
+            raise RuntimeError("SAFETY STOP: trop de tours")
+        if time.time() - self.start_time > self.timeout_seconds:
+            raise TimeoutError("SAFETY STOP: timeout")
+
         

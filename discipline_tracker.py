@@ -11,7 +11,7 @@ try:
 except FileExistsError:
     pass
 while True:
-    safe.steps
+    safe.step()
     user_input = input("combien d'heure tu travaille par jour ? (q pour quitter) : ")
     if user_input.lower() == "q":
         print("fin du programme. Continue comme ça !")
