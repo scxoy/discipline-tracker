@@ -16,7 +16,9 @@ else:
     reward_distance = abs(take_profit - entry_price)
     profit = reward_distance * quantity
     r_ratio = profit / risk_amount
+    percent_gain = (profit / capital) * 100
 
+    print(f"Gain ptentiel en % du capital : {percent_gain:.2f}%")
     print(f"Montant risqué : {risk_amount}")
     print(f"Distance risque : {distance}")
     print(f"Quantité à prendre : {quantity}")
