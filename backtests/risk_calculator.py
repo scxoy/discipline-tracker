@@ -1,11 +1,34 @@
+from statistics import mode
 print("=== Risk Calculator ===")
 
 capital = float(input("Capital total : "))
-risk_percent = float(input("Risque en % par trade : "))
+risk_percent = float(input("Risque en % par trade : ").replace("%", "").strip())
 entry_price = float(input("Prix d'entrée : "))
 stop_price = float(input("Prix du stop : "))
 take_profit = float(input("Prix take profit : "))
-
+if mode == "2":
+    print("\n=== Simulation ===")
+    capital = float(input("Capital initial : "))
+    risk_percent = float(input("Risque en % par trade : ").replace("%", "").strip())
+    n_trades = int(input("Nombre de trades : "))
+    winrate = float(input("Winrate en % : ").strip().replace("%", ""))
+    r_multiple = float(input("R multiple moyen (ex: 2) : "))
+    
+    risk_fraction = risk_percent / 100
+    win_fraction = winrate / 100
+    expectancy = win_fraction * r_multiple - (1 - win_fraction)
+    print(f"Expectancy théorique par trade : {expectancy:.4f} R")
+    
+    for i in range(1, n_trades + 1):
+        risk_amount = capital * risk_fraction
+        # gain = +R*risk_amount si win, sinon -1*risk_amount
+        # on fait simple: on gagne si i dans la partie "wins" selon winrate
+        # (plus tard on fera alèatoire)
+        if i <= int(n_trades * win_fraction):
+            gain += risk_amount * r_multiple
+        else:
+            gain -= risk_amount
+    print(f"\nCapital final : {capital:.2f}")
 risk_amount = capital * (risk_percent / 100)
 distance = abs(entry_price - stop_price)
 
