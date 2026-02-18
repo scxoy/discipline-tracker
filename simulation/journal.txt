@@ -1,0 +1,10 @@
+simulation expectancy
+40% winrate - R=2
+Expectancy = +0.20R
+
+50% winrate - R=2
+Expectancy = 0.50R 
+
+Conclusion:
+L'asymétrie > winrate.
+La survie prime.
