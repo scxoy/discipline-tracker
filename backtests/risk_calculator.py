@@ -1,4 +1,5 @@
 from statistics import mode
+import random 
 print("=== Risk Calculator ===")
 
 capital = float(input("Capital total : "))
@@ -18,13 +19,13 @@ if mode == "2":
     win_fraction = winrate / 100
     expectancy = win_fraction * r_multiple - (1 - win_fraction)
     print(f"Expectancy théorique par trade : {expectancy:.4f} R")
-    
+
     for i in range(1, n_trades + 1):
         risk_amount = capital * risk_fraction
         # gain = +R*risk_amount si win, sinon -1*risk_amount
         # on fait simple: on gagne si i dans la partie "wins" selon winrate
         # (plus tard on fera alèatoire)
-        if i <= int(n_trades * win_fraction):
+        if random.random() < win_fraction:
             gain += risk_amount * r_multiple
         else:
             gain -= risk_amount
