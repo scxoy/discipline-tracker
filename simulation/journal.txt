@@ -8,3 +8,9 @@ Expectancy = 0.50R
 Conclusion:
 L'asymétrie > winrate.
 La survie prime.
+
+R = 2, 40% winrate = croissance
+R = 1, 40% winrate + destruction
+Conclusion:
+L'avantage statistique > émotions
+Survie + asymétrie = base du systeme 
