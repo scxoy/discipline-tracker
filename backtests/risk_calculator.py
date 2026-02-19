@@ -19,6 +19,9 @@ if mode == "2":
     win_fraction = winrate / 100
     expectancy = win_fraction * r_multiple - (1 - win_fraction)
     print(f"Expectancy théorique par trade : {expectancy:.4f} R")
+    wins = 0
+    losses = 0
+    gain = 0
 
     for i in range(1, n_trades + 1):
         risk_amount = capital * risk_fraction
@@ -27,8 +30,12 @@ if mode == "2":
         # (plus tard on fera alèatoire)
         if random.random() < win_fraction:
             gain += risk_amount * r_multiple
+            wins += 1
         else:
             gain -= risk_amount
+            losses += 1
+    
+    print(f"Wins: {wins} | losses: {losses}")
     print(f"\nCapital final : {capital:.2f}")
 risk_amount = capital * (risk_percent / 100)
 distance = abs(entry_price - stop_price)
