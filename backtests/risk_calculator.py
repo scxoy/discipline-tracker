@@ -60,20 +60,38 @@ def run_simulation():
 
     wins = 0
     losses = 0
-
+    current_streak = 0
+    max_winning_streak = 0 
+    max_losing_streak = 0
+    
     for _ in range(n_trades):
         risk_amount = capital * risk_fraction
 
         if random.random() < win_fraction:
             capital += risk_amount * r_multiple
             wins += 1
+            current_streak += 1
+            # streak
+            if current_streak >= 0:
+                current_streak = 1
+            else: current_streak = 1
         else:
             capital -= risk_amount
             losses += 1
-
+            # streak
+            if current_streak <= 0:
+                current_streak -= 1
+            else: current_streak = -1
+        # update max streaks (toujours dans la boucle)
+        if current_streak > max_winning_streak:
+            max_winning_streak = current_streak
+        if abs(current_streak) > max_losing_streak and current_streak < 0:
+            max_losing_streak = abs(current_streak)
+    
     print(f"\nWins: {wins} | Losses: {losses}")
     print(f"Capital final : {capital:.2f}")
-
+    print(f"Max winning streak : {max_winning_streak}")
+    print(f"Max losing streak : {max_losing_streak}")
 
 # =======================
 # MENU PRINCIPAL
