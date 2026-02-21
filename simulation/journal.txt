@@ -14,3 +14,13 @@ R = 1, 40% winrate + destruction
 Conclusion:
 L'avantage statistique > émotions
 Survie + asymétrie = base du systeme 
+
+13 pertes à 1% = 12% 
+13 pertes à 2% = 23%
+13 pertes à 3% = 33%
+La différence ne vient pas du système mais du risk sizing.
+Un système rentable peut devenir mentalement destructeur si le risque est trop élevé.
+Perdre -33% exige = +49% pour revenir au capital initial.
+Conclusion:
+La survie est plus importante que la vitesse.
+Un edge + sizing faible + répétition = croissance durable.
