@@ -54,10 +54,9 @@ def run_simulation():
 
     risk_fraction = risk_percent / 100
     win_fraction = winrate / 100
-
-    expectancy = win_fraction * r_multiple - (1 - win_fraction) * 1
-    print(f"\nExpectancy théorique par trade : {expectancy:.4f} R")
-
+    
+    expectancy_theoretical = win_fraction * r_multiple - (1 - win_fraction) * 1
+    
     wins = 0
     losses = 0
     current_streak = 0
@@ -88,10 +87,17 @@ def run_simulation():
         if abs(current_streak) > max_losing_streak and current_streak < 0:
             max_losing_streak = abs(current_streak)
     
+    total_R = wins * r_multiple - losses * 1 
+    expectancy_real = total_R / n_trades
+   
     print(f"\nWins: {wins} | Losses: {losses}")
     print(f"Capital final : {capital:.2f}")
     print(f"Max winning streak : {max_winning_streak}")
     print(f"Max losing streak : {max_losing_streak}")
+    
+    print(f"Expectancy théorique : {expectancy_theoretical:.4f} R")
+    print(f"Expectancy réelle     : {expectancy_real:.4f} R")
+    print(f"Diférence             : {(expectancy_real - expectancy_theoretical):.4} R")
 
 # =======================
 # MENU PRINCIPAL
