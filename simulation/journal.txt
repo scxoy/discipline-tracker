@@ -24,3 +24,8 @@ Perdre -33% exige = +49% pour revenir au capital initial.
 Conclusion:
 La survie est plus importante que la vitesse.
 Un edge + sizing faible + répétition = croissance durable.
+
+Un systéme  rentable peut avoir -30% de drawdown.
+22 pertes d'affilée à 1% = 20%.
+Le role du risk management est de protéger la discipline.
+
