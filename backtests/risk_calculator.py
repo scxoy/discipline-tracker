@@ -47,6 +47,9 @@ def run_normal():
 # =======================
 def run_simulation():
     capital = float(input("Capital initial : "))
+    capital_initial = capital
+    peak_capital = capital
+    max_drawdown = 0
     risk_percent = float(input("Risque en % par trade : ").replace("%", "").strip())
     n_trades = int(input("Nombre de trades : "))
     winrate = float(input("Winrate en % : ").replace("%", "").strip())
@@ -86,7 +89,11 @@ def run_simulation():
             max_winning_streak = current_streak
         if abs(current_streak) > max_losing_streak and current_streak < 0:
             max_losing_streak = abs(current_streak)
-    
+        if capital > peak_capital:
+            peak_capital = capital
+        drawdown = (peak_capital - capital) / peak_capital
+        if drawdown > max_drawdown:
+            max_drawdown = drawdown
     total_R = wins * r_multiple - losses * 1 
     expectancy_real = total_R / n_trades
    
@@ -98,6 +105,9 @@ def run_simulation():
     print(f"Expectancy théorique : {expectancy_theoretical:.4f} R")
     print(f"Expectancy réelle     : {expectancy_real:.4f} R")
     print(f"Diférence             : {(expectancy_real - expectancy_theoretical):.4} R")
+    growth_pct = (capital / capital_initial - 1) * 100
+    print(f"Croissance du capital : {growth_pct:.2f}%")
+    print(f"Max drawdown : {max_drawdown * 100:.2f}%")
 
 # =======================
 # MENU PRINCIPAL
