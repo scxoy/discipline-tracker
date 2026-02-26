@@ -72,9 +72,13 @@ def main():
         total_dd = 0
         worst_dd_seen = 0.0
         dd_above_50 = 0
-
+        ruin_count = 0
+        
         for seed in range(n_runs):
             result = simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple, seed=seed)
+            if result["final"] < capital_initial * 0.5:
+                ruin_count += 1
+            ruin_prob = ruin_count / n_runs
             total_final += result["final"]
             total_dd += result["max_dd_pct"]
             worst_dd_seen = max(worst_dd_seen, result["max_dd_pct"])
@@ -82,14 +86,18 @@ def main():
                 dd_above_50 += 1
         avg_final = total_final / n_runs
         avg_dd = total_dd / n_runs
-        
+        prob_dd_50 = dd_above_50 / n_runs
+        score_1 = avg_final * (1 - prob_dd_50)
+        score_2 = avg_final / (1 + avg_dd/100)
+
         print("\n===========================")
         print(f"Risk = {risk_percent}%")
         print(f"Avg capital final : {avg_final:.2f}")
         print(f"Avg max DD        : {avg_dd:.2f}%")
         print(f"Worst DD observed : {worst_dd_seen:.2f}%")
         print(f"Prob DD > 50%     : {dd_above_50 / n_runs * 100:.2f}#")
-
+        print(f"Score adjusted (catastrophe) : {score_1:.2f}")
+        print(f"Score adjusted (volatility)  : {score_2:.2f}")
 
 if __name__ == "__main__":
     main()
