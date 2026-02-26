@@ -2,7 +2,7 @@ import random
 
 
 def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple, seed=None):
-
+    
     if seed is not None:
         random.seed(seed)
 
@@ -57,7 +57,7 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
         "max_win_streak": max_winning_streak,
         "max_losses_streak": max_losing_streak,
         "max_dd_pct": max_drawdown * 100,
-    }
+        }
 
 
 def main():
@@ -65,26 +65,30 @@ def main():
     n_trade = 1000
     winrate_percent = 30
     r_multiple = 3
+    n_runs = 1000
 
-    for risk_percent in [1, 2]:
+    for risk_percent in [0.5, 0.75, 1, 1.25, 1.5, 2,]:
+        total_final = 0 
+        total_dd = 0
+        worst_dd_seen = 0.0
+        dd_above_50 = 0
 
-        result = simulate(
-            capital_initial,
-            risk_percent,
-            n_trade,
-            winrate_percent,
-            r_multiple,
-            seed=42
-        )
-
+        for seed in range(n_runs):
+            result = simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple, seed=seed)
+            total_final += result["final"]
+            total_dd += result["max_dd_pct"]
+            worst_dd_seen = max(worst_dd_seen, result["max_dd_pct"])
+            if result["max_dd_pct"] > 50:
+                dd_above_50 += 1
+        avg_final = total_final / n_runs
+        avg_dd = total_dd / n_runs
+        
         print("\n===========================")
-        print(f"Risk = {result['risk']}%")
-        print(f"Capital final : {result['final']:.2f}")
-        print(f"Croissance : {result['growth']:.2f}%")
-        print(f"Wins / Losses : {result['wins']} / {result['losses']}")
-        print(f"Max win streak : {result['max_win_streak']}")
-        print(f"Max losses streak : {result['max_losses_streak']}")
-        print(f"Max drawdown : {result['max_dd_pct']:.2f}%")
+        print(f"Risk = {risk_percent}%")
+        print(f"Avg capital final : {avg_final:.2f}")
+        print(f"Avg max DD        : {avg_dd:.2f}%")
+        print(f"Worst DD observed : {worst_dd_seen:.2f}%")
+        print(f"Prob DD > 50%     : {dd_above_50 / n_runs * 100:.2f}#")
 
 
 if __name__ == "__main__":
