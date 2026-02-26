@@ -29,3 +29,29 @@ Un systéme  rentable peut avoir -30% de drawdown.
 22 pertes d'affilée à 1% = 20%.
 Le role du risk management est de protéger la discipline.
 
+Aujourd'hui j'ai testé differents risk % sur 1000 simulation avec:
+Winrate = 30%
+R multpiple =3
+1000 trades
+Edge positif = +0.2
+                    Oservations
+1. La croissance moyenne augmente avec le risk %
+2. le drawdown moyen augmente fortement avec le risk %
+3. la probabilité d'un drawdown >50% explose de maniere non linéaire
+    La relation n'est pas proportionelle.
+    Elle accelère fortement après 1.25-1.5%.
+                    Résultats marquant 
+A 0.5% la probabilité quasi nulle au DD>50%
+A 1% très faible probabilité (-0.4)
+A 1.5 probabilité = 6%
+A 2% probabilité = 28%
+                    un risk plus elevé augmente fortement la variance.
+Leçon  principale la taille de possition est plus importante que la stratégie.
+Même avec un edge mathématique positif un sizing trop agressif rend le systeme psychologiquement instable.
+Le problème n'est pas l'espérance.
+Le problème est la distribution.
+                    Conclusion personnelle 
+Pour un horizon long terme (5-10ans), 1% semble durable.
+1.5% devient déjà risqué.
+2% est trop agressif à long terme malgré une croissance moyenne plus élevée.
+                   objectif: optimiser la survie, pas maximiser la moyenne.
