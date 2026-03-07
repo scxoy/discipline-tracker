@@ -55,3 +55,17 @@ Pour un horizon long terme (5-10ans), 1% semble durable.
 1.5% devient déjà risqué.
 2% est trop agressif à long terme malgré une croissance moyenne plus élevée.
                    objectif: optimiser la survie, pas maximiser la moyenne.
+
+
+Aujourd'hui j'ai amélioré le simulateur de strateégie.
+Le script teste plusieurs niveaux de risque  (0.5%, 1%, 1.5%, 2%).
+Il calcule :
+- le capital final moyen
+- le drawdown moyen 
+- le  pire drawdown observé
+- le la probanilité d'un drawdown superieur a 50%.
+J'ai aussi ajouté  equity_curve pour enregistrer l'évolution du capital a chaque trade.
+Cela permettra plus tard d'analyser la trajectoire complète du capital.
+Conclusion personnelle : 
+Une croissance élevée peut cacher un risque très élevé.
+L'objectif reste d'optimiser la survie sur le long terme.
