@@ -19,11 +19,13 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
 
     win_fraction = winrate_percent / 100
     risk_fraction = risk_percent / 100
+ 
+    equity_curve = []    # < ICI on crée la liste
 
     for _ in range(n_trade):
 
         risk_amount = capital * risk_fraction
-
+        
         if random.random() < win_fraction:
             # WIN
             gain = risk_amount * r_multiple
@@ -40,7 +42,8 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
 
             current_streak = current_streak - 1 if current_streak <= 0 else -1
             max_losing_streak = max(max_losing_streak, abs(current_streak))
-
+        
+        equity_curve.append(capital)       # < ICI on enregistre le capital
         # drawdown
         peak = max(peak, capital)
         drawdown = (peak - capital) / peak
@@ -57,6 +60,7 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
         "max_win_streak": max_winning_streak,
         "max_losses_streak": max_losing_streak,
         "max_dd_pct": max_drawdown * 100,
+        "equity": equity_curve
         }
 
 
