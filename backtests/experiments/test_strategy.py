@@ -1,5 +1,6 @@
+import matplotlib.pyplot as plt
 import random
-
+import numpy as np
 
 def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple, seed=None):
     
@@ -9,6 +10,10 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
     capital = capital_initial
     peak = capital
     max_drawdown = 0.0
+    
+    recovery_times = []
+    recovery_counter = 0
+    in_drawdown = False
 
     wins = 0
     losses = 0
@@ -49,7 +54,30 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
         drawdown = (peak - capital) / peak
         max_drawdown = max(max_drawdown, drawdown)
 
+    if  capital < peak:
+        in_drawdown = True
+        recovery_counter += 1
+    elif in_drawdown and capital >= peak:
+        recovery_times.append(recovery_counter)
+        recovery_counter = 0
+        in_drawdown = False
+    
     growth_pct = (capital / capital_initial - 1) * 100
+
+    if capital < peak:
+        in_drawdown = True
+        recovery_counter += 1
+    elif in_drawdown and capital >= peak:
+        recovery_times.append(recovery_counter)
+        recovery_counter = 0 
+        in_drawdown = False
+    
+    if len(recovery_times) > 0:
+        avg_recovery = sum(recovery_times) / len(recovery_times)
+        worst_recovery = max(recovery_times)
+    else:
+        avg_recovery = 0
+        worst_recovery = 0
 
     return {
         "risk": risk_percent,
@@ -60,7 +88,9 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
         "max_win_streak": max_winning_streak,
         "max_losses_streak": max_losing_streak,
         "max_dd_pct": max_drawdown * 100,
-        "equity": equity_curve
+        "equity": equity_curve,
+        "avg_recovery": avg_recovery,
+        "worst_recovery": worst_recovery,
         }
 
 
@@ -69,7 +99,8 @@ def main():
     n_trade = 1000
     winrate_percent = 30
     r_multiple = 3
-    n_runs = 1000
+    plt.figure()
+    n_runs = 20
 
     for risk_percent in [0.5, 0.75, 1, 1.25, 1.5, 2,]:
         total_final = 0 
@@ -78,21 +109,36 @@ def main():
         dd_above_50 = 0
         ruin_count = 0
         
+        all_equities = []
+
         for seed in range(n_runs):
             result = simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple, seed=seed)
             if result["final"] < capital_initial * 0.5:
                 ruin_count += 1
-            ruin_prob = ruin_count / n_runs
+
             total_final += result["final"]
             total_dd += result["max_dd_pct"]
             worst_dd_seen = max(worst_dd_seen, result["max_dd_pct"])
+            
             if result["max_dd_pct"] > 50:
                 dd_above_50 += 1
+
+            equity = result["equity"]
+            plt.plot(equity, alpha=0.3)
+        
         avg_final = total_final / n_runs
         avg_dd = total_dd / n_runs
         prob_dd_50 = dd_above_50 / n_runs
         score_1 = avg_final * (1 - prob_dd_50)
         score_2 = avg_final / (1 + avg_dd/100)
+        
+        mean_equity = np.mean(all_equities, axis=0)
+        plt.plot(mean_equity, linewidth=3)
+
+        plt.title("Monte Carlo Equity Curve")
+        plt.xlabel("Trades")
+        plt.ylabel("Capital")
+        plt.show()
 
         print("\n===========================")
         print(f"Risk = {risk_percent}%")
@@ -102,6 +148,10 @@ def main():
         print(f"Prob DD > 50%     : {dd_above_50 / n_runs * 100:.2f}#")
         print(f"Score adjusted (catastrophe) : {score_1:.2f}")
         print(f"Score adjusted (volatility)  : {score_2:.2f}")
+        print("length equity curve:", len(result["equity"]))
+        print("first 10 equity values:", equity[:10])
+        print(f"Avg recovery time      : {result['avg_recovery']:.2f} trades")
+        print(f"Worst recovery time    : {result['worst_recovery']} trades")
 
 if __name__ == "__main__":
     main()
