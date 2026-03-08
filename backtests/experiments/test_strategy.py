@@ -138,6 +138,7 @@ def main():
         plt.title("Monte Carlo Equity Curve")
         plt.xlabel("Trades")
         plt.ylabel("Capital")
+        plt.savefig("results/monte_carlo.png")
         plt.show()
 
         print("\n===========================")
