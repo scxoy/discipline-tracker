@@ -124,6 +124,7 @@ def main():
                 dd_above_50 += 1
 
             equity = result["equity"]
+            all_equities.append(equity)
             plt.plot(equity, alpha=0.3)
         
         avg_final = total_final / n_runs
@@ -138,7 +139,7 @@ def main():
         plt.title("Monte Carlo Equity Curve")
         plt.xlabel("Trades")
         plt.ylabel("Capital")
-        plt.savefig("results/monte_carlo.png")
+        plt.savefig("../results/monte_carlo.png")
         plt.show()
 
         print("\n===========================")
