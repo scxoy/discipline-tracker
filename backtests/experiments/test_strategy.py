@@ -108,7 +108,8 @@ def main():
         worst_dd_seen = 0.0
         dd_above_50 = 0
         ruin_count = 0
-        
+        best_risk = None
+        best_score = -float("inf")
         all_equities = []
 
         for seed in range(n_runs):
@@ -132,7 +133,10 @@ def main():
         prob_dd_50 = dd_above_50 / n_runs
         score_1 = avg_final * (1 - prob_dd_50)
         score_2 = avg_final / (1 + avg_dd/100)
-        
+        if score_2 > best_score:
+            best_score = score_2
+            best_risk = risk_percent
+
         mean_equity = np.mean(all_equities, axis=0)
         plt.plot(mean_equity, linewidth=3)
 
@@ -154,6 +158,9 @@ def main():
         print("first 10 equity values:", equity[:10])
         print(f"Avg recovery time      : {result['avg_recovery']:.2f} trades")
         print(f"Worst recovery time    : {result['worst_recovery']} trades")
+        print("\nBest risk level :", best_risk, "%")
+        print("Best score :", round(best_score, 2))
+
 
 if __name__ == "__main__":
     main()
