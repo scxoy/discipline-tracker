@@ -92,7 +92,7 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
         "avg_recovery": avg_recovery,
         "worst_recovery": worst_recovery,
         }
-
+    
 
 def main():
     capital_initial = 100
@@ -128,6 +128,20 @@ def main():
             all_equities.append(equity)
             plt.plot(equity, alpha=0.3)
         
+        returns = []
+        for i in range(1, len(equity)):
+            r = (equity[i] - equity[i-1]) / equity[i-1]
+            returns.append(r)
+            
+        avg_return = sum(returns) / len(returns)
+    
+        import math
+
+        variance = sum(r -( avg_return) ** 2 for r in returns) / len(returns)
+        volatility = math.sqrt(variance)
+
+        sharpe = avg_return / volatility if volatility != 0 else 0
+
         avg_final = total_final / n_runs
         avg_dd = total_dd / n_runs
         prob_dd_50 = dd_above_50 / n_runs
@@ -139,7 +153,7 @@ def main():
 
         mean_equity = np.mean(all_equities, axis=0)
         plt.plot(mean_equity, linewidth=3)
-
+        
         plt.title("Monte Carlo Equity Curve")
         plt.xlabel("Trades")
         plt.ylabel("Capital")
@@ -160,7 +174,7 @@ def main():
         print(f"Worst recovery time    : {result['worst_recovery']} trades")
         print("\nBest risk level :", best_risk, "%")
         print("Best score :", round(best_score, 2))
-
+        print("Sharpe ratio :", round(sharpe, 4))
 
 if __name__ == "__main__":
     main()
