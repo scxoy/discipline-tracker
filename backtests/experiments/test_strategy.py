@@ -101,6 +101,7 @@ def main():
     r_multiple = 3
     plt.figure()
     n_runs = 20
+    final_capitals = []
 
     for risk_percent in [0.5, 0.75, 1, 1.25, 1.5, 2,]:
         total_final = 0 
@@ -126,6 +127,7 @@ def main():
 
             equity = result["equity"]
             all_equities.append(equity)
+            final_capitals.append(result["final"])
             plt.plot(equity, alpha=0.3)
         
         returns = []
@@ -142,6 +144,17 @@ def main():
 
         sharpe = avg_return / volatility if volatility != 0 else 0
 
+        downside_returns = [r for r in returns if r <0]
+        
+        if len(downside_returns) > 0:
+            downside_variance = sum((r - 0) ** 2 for r in downside_returns) / len(downside_returns)
+            downside_volatility = math.sqrt(downside_variance)
+            sortino = avg_return / downside_volatility if downside_volatility != 0 else 0
+        else:
+            sortino = 0 
+            calmar = avg_return / (avg_dd / 100) if avg_dd != 0 else 0
+            print("Calmar ratio :", round(calmar, 4))
+
         avg_final = total_final / n_runs
         avg_dd = total_dd / n_runs
         prob_dd_50 = dd_above_50 / n_runs
@@ -153,11 +166,18 @@ def main():
 
         mean_equity = np.mean(all_equities, axis=0)
         plt.plot(mean_equity, linewidth=3)
-        
+
         plt.title("Monte Carlo Equity Curve")
         plt.xlabel("Trades")
         plt.ylabel("Capital")
         plt.savefig("../results/monte_carlo.png")
+        plt.show()
+     
+        plt.figure()
+        plt.hist(final_capitals, bins=30)
+        plt.title("Distribution of Final Capital")
+        plt.xlabel("final Capital")
+        plt.ylabel("frequency")
         plt.show()
 
         print("\n===========================")
@@ -175,6 +195,11 @@ def main():
         print("\nBest risk level :", best_risk, "%")
         print("Best score :", round(best_score, 2))
         print("Sharpe ratio :", round(sharpe, 4))
+        print("Sortino ratio :", round(sortino, 4))
+        print("Average drawdown :", round(avg_dd, 2), "%")
+        print("Nombre de capitaux finaux :", len(final_capitals))
+        print("Premiers capitaux finaux :", final_capitals[:10])
+
 
 if __name__ == "__main__":
     main()
