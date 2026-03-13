@@ -69,3 +69,28 @@ Cela permettra plus tard d'analyser la trajectoire complète du capital.
 Conclusion personnelle : 
 Une croissance élevée peut cacher un risque très élevé.
 L'objectif reste d'optimiser la survie sur le long terme.
+
+
+plus le risk % augmente plus la variance explose.
+la moyennne est trompeuse, les trajectoire varient énormément.
+survivre aux drawdown est la priorité.
+
+12 mars 
+Ce que j'ai appris:
+ crée une simulation Monte carlo avec Python
+ afficher les equity curves et la distribution du capital final
+ comprendre la structure du projet (experiments/results)
+ utiliser le terminal (cd, is, tree)
+ compter en japonais de 1 a 99 et de 99 a 1 
+     Ce qui était difficile:
+     comprendre pourquoiç l'histogramme était vide.
+     trouver ou ajouter final_capital.append()
+     Ce que je veux tester demain:
+     enregistrer les resulats des simulation dans un fichier CSV
+     analyser les données générées.
+
+
+Aujourd'hui j'ai ajouté l'analyse mean vs median au moteur Monte Carlo.
+J'ai compris que quelques résultats extreme peuvent tirer la moyenne vers le haut.
+La médiane représente mieux le résultat typique d'une simulation.
+Conclusion : en finance, la moyenne suele peut etre trompeuse.
