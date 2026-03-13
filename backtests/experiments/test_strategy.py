@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import random
 import numpy as np
+import csv
 
 def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple, seed=None):
     
@@ -164,6 +165,19 @@ def main():
             best_score = score_2
             best_risk = risk_percent
 
+        with open("../results/simulation.csv", "w", newline="") as f:
+           writer = csv.writer(f)
+    
+           writer.writerow(["run", "final_capital"])
+
+           for i, cap in enumerate(final_capitals):
+               writer.writerow([i, cap])
+     
+        import numpy as np
+
+        mean_final = np.mean(final_capitals)
+        median_final = np.median(final_capitals)
+
         mean_equity = np.mean(all_equities, axis=0)
         plt.plot(mean_equity, linewidth=3)
 
@@ -199,6 +213,8 @@ def main():
         print("Average drawdown :", round(avg_dd, 2), "%")
         print("Nombre de capitaux finaux :", len(final_capitals))
         print("Premiers capitaux finaux :", final_capitals[:10])
+        print("Mean final capital :", round(mean_final,2))
+        print("Median final capital :", round(median_final,2))
 
 
 if __name__ == "__main__":
