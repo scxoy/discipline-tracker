@@ -94,3 +94,8 @@ Aujourd'hui j'ai ajouté l'analyse mean vs median au moteur Monte Carlo.
 J'ai compris que quelques résultats extreme peuvent tirer la moyenne vers le haut.
 La médiane représente mieux le résultat typique d'une simulation.
 Conclusion : en finance, la moyenne suele peut etre trompeuse.
+
+
+Aujourd'hui j'ai ajouté le calcul de probability de ruine dans la simuilation Monte Carlo.
+j'ai compris que la moyenne  pezut etre trompeuse et que la médiane représente mieux le résultat typique.
+Le simulateur peut maintenant mesurer le risque de catastrophe d'une strategie.
