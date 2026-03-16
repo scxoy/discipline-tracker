@@ -103,7 +103,7 @@ def main():
     plt.figure()
     n_runs = 20
     final_capitals = []
-
+    
     for risk_percent in [0.5, 0.75, 1, 1.25, 1.5, 2,]:
         total_final = 0 
         total_dd = 0
@@ -180,6 +180,10 @@ def main():
 
         mean_equity = np.mean(all_equities, axis=0)
         plt.plot(mean_equity, linewidth=3)
+        
+        ruin_threshold = 80  # capital critique (par exemple 50 si tu pars de 100)
+        ruined = sum(1 for c in final_capitals if c <= ruin_threshold)
+        ruin_probability = ruined / len(final_capitals)
 
         plt.title("Monte Carlo Equity Curve")
         plt.xlabel("Trades")
@@ -215,6 +219,9 @@ def main():
         print("Premiers capitaux finaux :", final_capitals[:10])
         print("Mean final capital :", round(mean_final,2))
         print("Median final capital :", round(median_final,2))
+        print("Ruin threshold :", ruin_threshold)
+        print("Simulation ruined :", ruined)
+        print("Ruin probability :", round(ruin_probability, 4))
 
 
 if __name__ == "__main__":
