@@ -102,7 +102,7 @@ def main():
     r_multiple = 3
     plt.figure()
     n_runs = 20
-    
+    summary_results = []
 
     for risk_percent in [0.5, 0.75, 1, 1.25, 1.5, 2,]:
         
@@ -188,6 +188,15 @@ def main():
         for threshold in ruin_thresholds:
             ruined = sum(1 for c in final_capitals if c <= threshold)
             ruin_probability = ruined / len(final_capitals)
+        
+        summary_results.append({
+            "risk": risk_percent,
+            "avg_final": avg_final,
+            "median_final": median_final,
+            "avg_dd": avg_dd,
+            "worst_dd": worst_dd_seen,
+            "ruin_prob": ruin_probability
+        })
 
         plt.title("Monte Carlo Equity Curve")
         plt.xlabel("Trades")
@@ -226,6 +235,9 @@ def main():
         print("Ruin threshold :", threshold)
         print("Simulation ruined :", ruined)
         print("Ruin probability :", round(ruin_probability, 4))
+        print("\n===== SUMMARY =====")
+        for row in summary_results:
+            print(row)
 
 
 if __name__ == "__main__":
