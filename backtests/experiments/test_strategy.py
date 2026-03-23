@@ -98,8 +98,8 @@ def simulate(capital_initial, risk_percent, n_trade, winrate_percent, r_multiple
 def main():
     capital_initial = 100
     n_trade = 1000
-    winrate_percent = 30
-    r_multiple = 3
+    winrate_percent = 40
+    r_multiple = 2
     plt.figure()
     n_runs = 20
     summary_results = []
@@ -188,14 +188,20 @@ def main():
         for threshold in ruin_thresholds:
             ruined = sum(1 for c in final_capitals if c <= threshold)
             ruin_probability = ruined / len(final_capitals)
-        
+            
+            if avg_dd > 30:
+                score = -9999
+            else:
+                score = avg_final - (avg_dd * 40) - (ruin_probability * 1000)
+
         summary_results.append({
             "risk": risk_percent,
             "avg_final": avg_final,
             "median_final": median_final,
             "avg_dd": avg_dd,
             "worst_dd": worst_dd_seen,
-            "ruin_prob": ruin_probability
+            "ruin_prob": ruin_probability,
+            "score": score
         })
 
         plt.title("Monte Carlo Equity Curve")
