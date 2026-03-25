@@ -103,6 +103,7 @@ def main():
     plt.figure()
     n_runs = 20
     summary_results = []
+    MAX_DD = 40
 
     for risk_percent in [0.5, 0.75, 1, 1.25, 1.5, 2,]:
         
@@ -242,8 +243,28 @@ def main():
         print("Simulation ruined :", ruined)
         print("Ruin probability :", round(ruin_probability, 4))
         print("\n===== SUMMARY =====")
+        print("Risk | Avg Final | Median | Avg DD | Worst DD | Ruin % | Score")
+        print("----------------------------------------------------------------")
         for row in summary_results:
-            print(row)
+            print(f"{row['risk']} | "
+                  f"{round(row['avg_final'], 2)} | "
+                  f"{round(row['median_final'], 2)} | "
+                  f"{round(row['avg_dd'], 2)}% | "
+                  f"{round(row['worst_dd'], 2)}% | "
+                  f"{round(row['ruin_prob'] * 100, 2)}% | "
+                  f"{round(row['score'], 2)}")
+        filtered = [
+            r for r in summary_results
+            if r["worst_dd"] < MAX_DD and r["score"]
+        ]
+        if not filtered:
+            print("X Aucune strategie valide avec ces criteres")
+        best = max(filtered, key=lambda x: x["score"])
+        print("\n===== BEST STRATEGY =====")
+        print(f"Risk: {best['risk']}")
+        print(f"Score: {round(best['score'], 2)}")
+        print(f"Avg DD: {round(best['avg_dd'], 2)}%")
+        print(f"Worst DD: {round(best['worst_dd'], 2)}%")
 
 
 if __name__ == "__main__":
