@@ -245,6 +245,20 @@ def main():
         print("\n===== SUMMARY =====")
         print("Risk | Avg Final | Median | Avg DD | Worst DD | Ruin % | Score")
         print("----------------------------------------------------------------")
+        
+        with open("results.csv", "w", newline="") as file:
+            writier = csv.writer(file)
+
+            writier.writerow([
+                "risk",
+                "avg_final",
+                "median_final",
+                "avg_dd",
+                "worst_dd",
+                "score"
+            ])
+
+        
         for row in summary_results:
             print(f"{row['risk']} | "
                   f"{round(row['avg_final'], 2)} | "
@@ -268,4 +282,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main() 
