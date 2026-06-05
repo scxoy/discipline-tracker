@@ -1,13 +1,9 @@
+from modules.username_search import search_username
+
 pseudo = input("Entre un pseudo : ")
 
-site = [
-    "https://github.com/",
-    "https://www.reddit.com/user/",
-    "https://www.youtube.com/@"
-]
+print("\n=== PETELGEUSE ===\n")
 
-print("\n=== PETELGUEUSE ===")
+resultat = search_username(pseudo)
 
-for site in site:
-    url = site + pseudo
-    print(url)
+print("nResultats :", resultat)
