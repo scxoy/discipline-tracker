@@ -6,4 +6,4 @@ print("\n=== PETELGEUSE ===\n")
 
 resultat = search_username(pseudo)
 
-print("nResultats :", resultat)
+print("\nAnalyse terminée")

@@ -19,17 +19,41 @@ sites = [
 
 def search_username(pseudo):
     compteur = 0
+    trouves = 0
+    refuses = 0
+    non_trouves = 0
+    inconnus = 0
 
     for site in sites:
         nom_site = site[0]
         url_base = site[1]
         url = url_base + pseudo
         print(url)
+        
         response = requests.get(url, timeout=5)
         status = interpret_status(response.status_code)
         print(status)
+        
+        status = interpret_status(response.status_code)
+        print(nom_site, ":", status)
+        if status == "Trouvé":
+            trouves += 1
+        elif status == "Refusé":
+            refuses += 1
+        elif status == "Non trouvé":
+            non_trouves += 1
+        else:
+            inconnus += 1
+
         compteur += 1
 
+    print("\n=== Résultats ===")
+    print("Trouvé:", trouves)
+    print("Refusé:", refuses)
+    print("Non trouvé:", non_trouves)
+    print("Inconnu:", inconnus)
+    print("\nSites vérifiés:", compteur)
+    
     return compteur
 
 def compter_sites():
