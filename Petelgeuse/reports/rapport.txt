@@ -1,0 +1,24 @@
+Pseudo : scxoy
+
+Github : Trouvé
+YouTube : Non trouvé
+Reddit : Trouvé
+TikTok : Refusé
+Instagram : Trouvé
+X : Trouvé
+facebook : Trouvé
+Twitch : Trouvé
+Spotify : Non trouvé
+Discord : Trouvé
+Steam : Trouvé
+Pinterest : Trouvé
+LinkedIn : Inconnu
+Snapchat : Refusé
+
+=== Résumé ===
+Trouvé: 9
+Refusé: 2
+Non trouvé: 2
+Inconnu: 1
+Erreurs: 0
+Sites vérifiés: 14
