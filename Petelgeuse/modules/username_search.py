@@ -23,6 +23,7 @@ def search_username(pseudo):
     refuses = 0
     non_trouves = 0
     inconnus = 0
+    erreurs = 0
 
     for site in sites:
         nom_site = site[0]
@@ -30,8 +31,11 @@ def search_username(pseudo):
         url = url_base + pseudo
         print(url)
         
-        response = requests.get(url, timeout=5)
-        status = interpret_status(response.status_code)
+        try:
+            response = requests.get(url, timeout=5)
+            status = interpret_status(response.status_code)
+        except:
+            status = "Erreur"
         print(status)
         
         status = interpret_status(response.status_code)
@@ -42,6 +46,8 @@ def search_username(pseudo):
             refuses += 1
         elif status == "Non trouvé":
             non_trouves += 1
+        elif status == "Erreur":
+            erreurs += 1
         else:
             inconnus += 1
 
@@ -52,6 +58,7 @@ def search_username(pseudo):
     print("Refusé:", refuses)
     print("Non trouvé:", non_trouves)
     print("Inconnu:", inconnus)
+    print("Erreurs:", erreurs)
     print("\nSites vérifiés:", compteur)
     
     return compteur
@@ -68,3 +75,4 @@ def interpret_status(code):
         return "Non trouvé"
     else:
         return "Inconnu"
+    
