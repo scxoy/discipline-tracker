@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 sites = [
     ["Github", "https://github.com/"],
@@ -24,10 +25,12 @@ def search_username(pseudo):
     non_trouves = 0
     inconnus = 0
     erreurs = 0
-    
+    maintenant = datetime.datetime.now()
+
     with open("reports/rapport.txt", "w") as fichier:
         fichier.write(f"Pseudo : {pseudo}\n\n")
-        
+        fichier.write(f"Date et heure : {maintenant}\n\n")
+
         for site in sites:
             nom_site = site[0]
             url_base = site[1]
